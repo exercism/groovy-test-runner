@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "fail",
+  "output": "example-syntax-error.sml:1: error: Value or constructor (FUNNQY) has not been declared Found near FUNNQY @ qwe\nexample-syntax-error.sml:1: error: Value or constructor (qwe) has not been declared Found near FUNNQY @ qwe\nException- Fail \"Static Errors\" raised"
+}

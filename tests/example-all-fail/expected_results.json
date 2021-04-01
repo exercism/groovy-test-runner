@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "fail",
+  "output": "leap\n  \u001b[31m✖ \u001b[0myear not divisible by 4: common year\n    Expected: false\n    Got: true\n  \u001b[31m✖ \u001b[0myear divisible by 4, not divisible by 100: leap year\n    Expected: true\n    Got: false\n\nTests: \u001b[32m0 passed\u001b[0m, \u001b[31m2 failed\u001b[0m, \u001b[31m0 errored\u001b[0m, 2 total"
+}

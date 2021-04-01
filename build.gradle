@@ -1,0 +1,10 @@
+apply plugin: "groovy"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.spockframework:spock-core:2.0-M2-groovy-3.0"
+    compile "org.codehaus.groovy:groovy-all:3.0.2"
+}
