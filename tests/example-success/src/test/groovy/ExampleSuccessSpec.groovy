@@ -1,10 +1,10 @@
 import spock.lang.*
 
-class LeapSpec extends Specification {
+class ExampleSuccessSpec extends Specification {
 
     def "Year not divisible by 4 in common year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -14,7 +14,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 2, not divisible by 4 in common year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -24,7 +24,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 4, not divisible by 100 in leap year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -34,7 +34,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 100, not divisible by 400 in common year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -44,7 +44,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 100 but not by 3 is still not a leap year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -54,7 +54,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 400 in leap year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -64,7 +64,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 400 but not by 125 is still a leap year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected
@@ -74,7 +74,7 @@ class LeapSpec extends Specification {
     @Ignore
     def "Year divisible by 200, not divisible by 400 in common year"() {
         expect:
-        new Leap(year).isLeapYear() == expected
+        new ExampleSuccess(year).isLeapYear() == expected
 
         where:
         year || expected

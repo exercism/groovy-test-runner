@@ -1,0 +1,1 @@
+classEESD ExampleSyntaxError@@

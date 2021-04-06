@@ -1,8 +1,8 @@
-class Leap {
+class ExampleSuccess {
 
     private final int year
 
-    Leap(int year) {
+    ExampleSuccess(int year) {
         this.year = year
     }
 

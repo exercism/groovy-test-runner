@@ -24,36 +24,61 @@ fi
 slug="$1"
 input_dir="${2%/}"
 output_dir="${3%/}"
-tests_file="test.sml"
+exercise=$(echo "${slug}" | sed -r 's/(^|-)([a-z])/\U\2/g')
+tests_file="${input_dir}/src/test/groovy/${exercise}Spec.groovy"
+tests_file_original="${tests_file}.original"
 results_file="${output_dir}/results.json"
 
 # Create the output directory if it doesn't exist
 mkdir -p "${output_dir}"
 
-rm -rf "${input_dir}/.gradle"
-cp -r /home/gradle/.gradle/ "${input_dir}/.gradle/"
-
-ls -al "${input_dir}/.gradle/caches"
+# Run this once to not show the welcome message
+gradle --version > /dev/null
 
 echo "${slug}: testing..."
 
+cp "${tests_file}" "${tests_file_original}"
+
+# TODO: figure out a nicer way to un-ignore the tests
+sed -i -E 's/@Ignore//' "${tests_file}"
+
+# TODO: figure out a nicer way to order the tests
+sed -i -E "s/^class/@Stepwise\nclass/" "${tests_file}"
+
 pushd "${input_dir}" > /dev/null
 
-gradle --offline test
+# Run the tests for the provided implementation file and redirect stdout and
+# stderr to capture it
+# TODO: figure out how to get gradle runnign with --offline
+test_output=$(gradle --console=plain test 2>&1)
+exit_code=$?
 
-# # Run the tests for the provided implementation file and redirect stdout and
-# # stderr to capture it
-# test_output=$(cat "${tests_file}" | poly --error-exit  -q 2>&1)
-# exit_code=$?
+popd > /dev/null
 
-# popd > /dev/null
+# Restore the original file
+mv -f "${tests_file_original}" "${tests_file}"
 
-# # Write the results.json file based on the exit code of the command that was 
-# # just executed that tested the implementation file
-# if [ $exit_code -eq 0 ]; then
-#     jq -n '{version: 1, status: "pass"}' > ${results_file}
-# else
-#     jq -n --arg output "${test_output}" '{version: 1, status: "fail", output: $output}' > ${results_file}
-# fi
+# Write the results.json file based on the exit code of the command that was 
+# just executed that tested the implementation file
+if [ $exit_code -eq 0 ]; then
+    jq -n '{version: 1, status: "pass"}' > ${results_file}
+else
+    # Sanitize the output
+    sanitized_output=$(printf "${test_output}" | \
+        sed -E \
+          -e 's/^Starting a Gradle Daemon.*$//' \
+          -e 's/See the report.*//' \
+          -e '/^> Task/d' | \
+        sed -n '/Try:/q;p' | \
+        sed -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' | \
+        sed -e '/^$/N;/^\n$/D')
 
-# echo "${slug}: done"
+    # Manually add colors to the output to help scanning the output for errors
+    colorized_test_output=$(echo "${sanitized_output}" | \
+        GREP_COLOR='01;31' grep --color=always -E -e '(^FAIL.*$|.*FAILED$)|$' | \
+        GREP_COLOR='01;32' grep --color=always -E -e '.*PASSED$|$')
+
+    jq -n --arg output "${colorized_test_output}" '{version: 1, status: "fail", output: $output}' > ${results_file}
+fi
+
+echo "${slug}: done"
