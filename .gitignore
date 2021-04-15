@@ -1,0 +1,5 @@
+tests/**/results.json
+tests/**/build/
+tests/**/gradle/
+tests/**/.gradle/
+tests/**/*.groovy.original

@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "fail",
+  "output": "\u001b[01;31m\u001b[KExampleEmptyFileSpec > Year not divisible by 4 in common year FAILED\u001b[m\u001b[K\n    Condition failed with Exception:\n\n    new ExampleEmptyFile(year).isLeapYear() == expected\n    |                    |\n    |                    2015\n    groovy.lang.GroovyRuntimeException: Could not find matching constructor for: ExampleEmptyFile(Integer)\n    \tat ExampleEmptyFileSpec.Year not divisible by 4 in common year(ExampleEmptyFileSpec.groovy:8)\n        at ExampleEmptyFileSpec.Year not divisible by 4 in common year(ExampleEmptyFileSpec.groovy:8)\n\n        Caused by:\n        groovy.lang.GroovyRuntimeException: Could not find matching constructor for: ExampleEmptyFile(Integer)\n            at ExampleEmptyFileSpec.Year not divisible by 4 in common year(ExampleEmptyFileSpec.groovy:8)\n\n1 test completed, 1 failed\n\n\u001b[01;31m\u001b[KFAILURE: Build failed with an exception.\u001b[m\u001b[K\n\n* What went wrong:\nExecution failed for task ':test'.\n> There were failing tests. "
+}
