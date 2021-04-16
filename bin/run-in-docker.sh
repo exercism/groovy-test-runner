@@ -34,8 +34,8 @@ mkdir -p "${output_dir}"
 docker build --rm -t exercism/groovy-test-runner .
 
 # Run the Docker image using the settings mimicking the production environment
+# TODO: --network none
 docker run \
-    --network none \
     --read-only \
     --mount type=bind,src="${input_dir}",dst=/solution \
     --mount type=bind,src="${output_dir}",dst=/output \

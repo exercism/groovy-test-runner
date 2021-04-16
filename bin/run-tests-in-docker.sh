@@ -16,8 +16,9 @@
 docker build --rm -t exercism/groovy-test-runner .
 
 # Run the Docker image using the settings mimicking the production environment
-# TODO: add --network none \
+# TODO: --network none
 docker run \
+    --read-only \
     --mount type=bind,src="${PWD}/tests",dst=/opt/test-runner/tests \
     --mount type=tmpfs,dst=/tmp \
     --workdir /opt/test-runner \
