@@ -49,8 +49,7 @@ pushd "${input_dir}" > /dev/null
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
-# TODO: figure out how to get gradle runnign with --offline
-test_output=$(gradle --console=plain test 2>&1)
+test_output=$(gradle --offline --console=plain test 2>&1)
 exit_code=$?
 
 popd > /dev/null

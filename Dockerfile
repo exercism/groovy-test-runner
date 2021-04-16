@@ -8,8 +8,9 @@ RUN apt-get update && \
 
 WORKDIR /opt/test-runner
 
+COPY src/ src/
 COPY build.gradle .
-RUN gradle clean build
+RUN gradle build
 
 COPY . .
 
