@@ -17,27 +17,31 @@ exit_code=0
 for test_dir in tests/*; do
     test_dir_name="$(basename $test_dir)"
     test_dir_path="$(realpath $test_dir)"
+    gradle_dir_path="${test_dir}/.gradle"
+    build_dir_path="${test_dir}/build"
     results_file="results.json"
     results_file_path="${test_dir}/results.json"
     expected_results_file="expected_results.json"
     expected_results_file_path="${test_dir}/expected_results.json"    
 
-    if [ "${test_dir_name}" != "output" ] && [ -f "${expected_results_file_path}" ]; then
-        bin/run.sh "${test_dir_name}" "${test_dir}" "${test_dir}"
+    # Clear cache as this influences the test output
+    rm -rf "${gradle_dir_path}" > /dev/null
+    rm -rf "${build_dir_path}" > /dev/null
 
-        # Normalize the results file
-        sed -i -E \
-            -e 's/ in [0-9]+m?s$//g' \
-            -e "s~${test_dir_path}~/solution~g" \
-            -e "s/${exercise}@[a-z0-9]+/${exercise}/g" \
-            "${results_file_path}"
+    bin/run.sh "${test_dir_name}" "${test_dir}" "${test_dir}"
 
-        echo "${test_dir_name}: comparing ${results_file} to ${expected_results_file}"
-        diff "${results_file_path}" "${expected_results_file_path}"
+    # Normalize the results file
+    sed -i -E \
+        -e 's/ in [0-9]+m?s$//g' \
+        -e "s~${test_dir_path}~/solution~g" \
+        -e "s/${exercise}@[a-z0-9]+/${exercise}/g" \
+        "${results_file_path}"
 
-        if [ $? -ne 0 ]; then
-            exit_code=1
-        fi
+    echo "${test_dir_name}: comparing ${results_file} to ${expected_results_file}"
+    diff "${results_file_path}" "${expected_results_file_path}"
+
+    if [ $? -ne 0 ]; then
+        exit_code=1
     fi
 done
 
