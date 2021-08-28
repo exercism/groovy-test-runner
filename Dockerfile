@@ -7,6 +7,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/test-runner
+# necessary because of https://github.com/keeganwitt/docker-gradle#reusing-the-gradle-cache
+ENV GRADLE_USER_HOME /root/
 
 COPY src/ src/
 COPY build.gradle .
