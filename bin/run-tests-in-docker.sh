@@ -1,7 +1,7 @@
 #! /bin/bash -e
 
 # Synopsis:
-# Test the test runner Docker image by running it against a predefined set of 
+# Test the test runner Docker image by running it against a predefined set of
 # solutions with an expected output.
 # The test runner Docker image is built automatically.
 
@@ -16,9 +16,9 @@
 docker build --rm -t exercism/groovy-test-runner .
 
 # Run the Docker image using the settings mimicking the production environment
+# --read-only cannot be used because it causes https://github.com/gradle/gradle/issues/8107
 docker run \
     --rm \
-    --read-only \
     --network none \
     --mount type=bind,src="${PWD}/tests",dst=/opt/test-runner/tests \
     --mount type=tmpfs,dst=/tmp \
