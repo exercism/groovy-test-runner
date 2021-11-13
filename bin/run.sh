@@ -71,7 +71,6 @@ if [ $exit_code -eq 0 ]; then
     jq -n '{version: 1, status: "pass"}' > ${results_file}
 else
 
-# -e '/\[ERROR\] $/d' \
     # Sanitize the output
     sanitized_output=$(printf "${test_output}" | \
         sed -E \
