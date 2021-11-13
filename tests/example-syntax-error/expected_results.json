@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "startup failed:\n/solution/src/main/groovy/ExampleSyntaxError.groovy: 1: Unexpected input: 'ExampleSyntaxError@' @ line 1, column 29.\n   classEESD ExampleSyntaxError@@\n                               ^\n\n1 error\n\n\u001b[01;31m\u001b[KFAILURE: Build failed with an exception.\u001b[m\u001b[K\n\n* What went wrong:\nExecution failed for task ':compileGroovy'.\n> Compilation failed; see the compiler error output for details."
+  "message": "[ERROR] /solution/src/main/groovy/ExampleSyntaxError.groovy: 1: Unexpected input: '@' @ line 1, column 29.\n[ERROR]    classEESD ExampleSyntaxError@@\n[ERROR]                                ^\n[ERROR] 1 error"
 }
