@@ -49,7 +49,7 @@ cp /root/pom.xml .
 # jansi tmp directory needs to be a RWX folder
 mkdir -p /solution/jansi-tmp
 # Tuning those parametes can speed up things
-export  JAVA_TOOL_OPTIONS="-Djansi.tmpdir=/solution/jansi-tmp -Xss128m -Xms256m -Xmx2G -XX:+UseG1GC"
+export JAVA_TOOL_OPTIONS="-Djansi.tmpdir=/solution/jansi-tmp -Xss128m -Xms256m -Xmx2G -XX:+UseG1GC"
 
 # Remove maven cache if it exists
 rm -rf target
