@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "[ERROR] /solution/src/main/groovy/ExampleSyntaxError.groovy: 1: Unexpected input: '@' @ line 1, column 29.\n[ERROR]    classEESD ExampleSyntaxError@@\n[ERROR]                                ^\n[ERROR] 1 error"
+  "message": "\u001b[01;31m\u001b[K[ERROR] /solution/src/main/groovy/ExampleSyntaxError.groovy: 1: Unexpected input: '@' @ line 1, column 29.\u001b[m\u001b[K\n\u001b[01;31m\u001b[K[ERROR]    classEESD ExampleSyntaxError@@\u001b[m\u001b[K\n\u001b[01;31m\u001b[K[ERROR]                                ^\u001b[m\u001b[K\n\u001b[01;31m\u001b[K[ERROR] 1 error\u001b[m\u001b[K"
 }
