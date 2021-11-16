@@ -1,4 +1,17 @@
-FROM gradle:6.3.0-jdk11
+# === Build maven cache ===
+
+FROM maven:3.8.3-jdk-11 AS cache
+
+# Ensure exercise dependencies are downloaded
+WORKDIR /opt/exercise
+COPY src/ src/
+COPY pom.xml .
+RUN mvn test dependency:go-offline -DexcludeReactor=false
+
+# === Build runtime image ===
+
+FROM maven:3.8.3-jdk-11
+WORKDIR /opt/test-runner
 
 RUN apt-get update && \
     apt-get install -y jq && \
@@ -6,14 +19,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/test-runner
-# necessary because of https://github.com/keeganwitt/docker-gradle#reusing-the-gradle-cache
-ENV GRADLE_USER_HOME /root/
-
-COPY src/ src/
-COPY build.gradle .
-RUN gradle build
-
+# Copy resources
 COPY . .
 
+# Copy cached dependencies
+COPY --from=cache /root/.m2 /root/.m2
+
+# Copy Maven pom.xml
+COPY --from=cache /opt/exercise/pom.xml /root/pom.xml
+
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
+
