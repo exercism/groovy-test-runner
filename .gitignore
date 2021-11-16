@@ -3,4 +3,5 @@ tests/**/build/
 tests/**/gradle/
 tests/**/.gradle/
 tests/**/*.groovy.original
-target
+target/
+jansi-tmp/
