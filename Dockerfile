@@ -10,7 +10,7 @@ RUN mvn test dependency:go-offline -DexcludeReactor=false
 
 # === Build runtime image ===
 
-FROM maven:3.8.3-jdk-11
+FROM maven:3.8.3-jdk-11-slim
 WORKDIR /opt/test-runner
 
 RUN apt-get update && \
