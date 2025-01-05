@@ -20,12 +20,20 @@ export BUILD_IMAGE=false
 # If the repository is checked out elsewhere, provide the path as the first argument.
 groovy_repo_path=$(realpath "${1:-${PWD}/../groovy}")
 repo_root=$(git rev-parse --show-toplevel)
-rm -r "${repo_root}/tmp" || true
+
+tmp_dir="$(mktemp -d)"
+echo "Using temporary directory: ${tmp_dir}"
+
+cleanup() {
+    rm -rf "${tmp_dir}"
+}
+
+trap cleanup EXIT
 
 # Iterate over all exercises directories
 for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     exercise_slug=$(basename "${exercise_dir}")
-    exercise_tmp_dir="${repo_root}/tmp/${exercise_slug}"
+    exercise_tmp_dir="${tmp_dir}/${exercise_slug}"
     mkdir -p "${exercise_tmp_dir}"
     cp -R "${exercise_dir}/" "${exercise_tmp_dir}"
     cp -R "${exercise_dir}/.meta/src/reference/" "${exercise_tmp_dir}/src/main"
@@ -34,6 +42,7 @@ for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     status=$(jq -r ".status" "${results_json}")
     if [[ "${status}" != "pass" ]]; then
         echo "💥 Test failed for ${exercise_slug}, check the output in ${results_json}"
+        jq . "${results_json}"
         exit 1
     fi
 done
