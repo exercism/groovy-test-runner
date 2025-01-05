@@ -5,3 +5,4 @@ tests/**/.gradle/
 tests/**/*.groovy.original
 target/
 jansi-tmp/
+tmp
