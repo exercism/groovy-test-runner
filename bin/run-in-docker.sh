@@ -32,7 +32,7 @@ mkdir -p "${output_dir}"
 
 # Build the Docker image
 if [[ "${BUILD_IMAGE:-true}" == "true" ]]; then
-  docker build --rm -t exercism/groovy-test-runner .
+    docker build --rm -t exercism/groovy-test-runner .
 fi
 
 # Run the Docker image using the settings mimicking the production environment
