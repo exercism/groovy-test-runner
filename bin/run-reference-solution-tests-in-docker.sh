@@ -30,6 +30,8 @@ cleanup() {
 
 trap cleanup EXIT
 
+failures=()
+
 # Iterate over all exercises directories
 for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     exercise_slug=$(basename "${exercise_dir}")
@@ -41,10 +43,16 @@ for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     results_json="${exercise_tmp_dir}/output/results.json"
     status=$(jq -r ".status" "${results_json}")
     if [[ "${status}" != "pass" ]]; then
-        echo "💥 Test failed for ${exercise_slug}, check the output in ${results_json}"
+        echo "💥 Test failed for ${exercise_slug}:"
         jq . "${results_json}"
-        exit 1
+        failures+=("${exercise_slug}")
     fi
 done
+
+if [[ -z "${#failures[@]}" ]]; then
+    echo "💥 The following exercises failed: ${failures[*]}"
+    echo "Check above for details"
+    exit 1
+fi
 
 echo "✅ All tests passed"
