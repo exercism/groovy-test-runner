@@ -49,7 +49,7 @@ for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     fi
 done
 
-if [[ "${#failures[@]}" != 0 ]]; then
+if (( "${#failures[@]}" != 0 )); then
     echo "💥 The following exercises failed: ${failures[*]}"
     echo "Check above for details"
     exit 1
