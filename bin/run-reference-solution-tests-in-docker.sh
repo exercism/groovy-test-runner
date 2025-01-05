@@ -34,7 +34,7 @@ failures=()
 
 # Iterate over all exercises directories
 for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
-    exercise_slug=$(basename "${exercise_dir}")
+    exercise_slug="${exercise_dir##*/}"
     exercise_tmp_dir="${tmp_dir}/${exercise_slug}"
     mkdir -p "${exercise_tmp_dir}"
     cp -R "${exercise_dir}/" "${exercise_tmp_dir}"
@@ -49,7 +49,7 @@ for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     fi
 done
 
-if [[ -z "${#failures[@]}" ]]; then
+if [[ "${#failures[@]}" != 0 ]]; then
     echo "💥 The following exercises failed: ${failures[*]}"
     echo "Check above for details"
     exit 1
