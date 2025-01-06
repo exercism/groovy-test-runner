@@ -39,7 +39,7 @@ for exercise_dir in "${groovy_repo_path}"/exercises/practice/*; do
     mkdir -p "${exercise_tmp_dir}"
     cp -R "${exercise_dir}/" "${exercise_tmp_dir}"
     cp -R "${exercise_dir}/.meta/src/reference/" "${exercise_tmp_dir}/src/main"
-    eval "${repo_root}/bin/run-in-docker.sh" "${exercise_slug}" "${exercise_tmp_dir}" "${exercise_tmp_dir}/output"
+    "${repo_root}/bin/run-in-docker.sh" "${exercise_slug}" "${exercise_tmp_dir}" "${exercise_tmp_dir}/output"
     results_json="${exercise_tmp_dir}/output/results.json"
     status=$(jq -r ".status" "${results_json}")
     if [[ "${status}" != "pass" ]]; then
