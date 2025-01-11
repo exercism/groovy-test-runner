@@ -28,11 +28,12 @@ exercise=$(echo "${slug}" | sed -r 's/(^|-)([a-z])/\U\2/g')
 path=${CONFIG_PATH:-'.meta'}
 
 function test_name_from_config() {
-    config="${input_dir}/${path}/config.json"
-    [[ -f "${config}" ]] || return
-    test_files=($(cat "${config}" | jq -r '.files.test[]'))
-    [[ "${#test_files[@]}" == '1' ]] || return
-    echo "$(basename "${test_files[0]}")"
+    local config="${input_dir}/${path}/config.json"
+    [[ -f "${config}" ]] || return 1
+    local -a test_files
+    mapfile -t test_files < <(jq -r '.files.test[]' "${config}")
+    (( ${#test_files[@]} == 1 )) || return 1
+    basename "${test_files[0]}"
 }
 
 function test_name_from_slug() {
