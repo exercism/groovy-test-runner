@@ -24,7 +24,6 @@ fi
 slug="$1"
 input_dir="${2%/}"
 output_dir="${3%/}"
-exercise=$(echo "${slug}" | sed -r 's/(^|-)([a-z])/\U\2/g')
 path=${CONFIG_PATH:-'.meta'}
 
 function test_name_from_config() {
