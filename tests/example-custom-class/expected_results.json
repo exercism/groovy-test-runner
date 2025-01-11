@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "fail",
+  "message": "\u001b[01;31m\u001b[K[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0,  <<< FAILURE! - in SomeSpec\u001b[m\u001b[K\n\u001b[01;31m\u001b[K[ERROR] SomeSpec.some test    <<< FAILURE!\u001b[m\u001b[K\norg.spockframework.runtime.ConditionNotSatisfiedError: \nCondition not satisfied:\n\nfalse\n\n\tat SomeSpec.some test(SomeSpec.groovy:7)\n\n\u001b[01;31m\u001b[K[ERROR] Failures: \u001b[m\u001b[K\n\u001b[01;31m\u001b[K[ERROR]   SomeSpec.some test:7 Condition not satisfied:\u001b[m\u001b[K\n\nfalse\n\n\u001b[01;31m\u001b[K[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0\u001b[m\u001b[K"
+}
