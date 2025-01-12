@@ -36,7 +36,7 @@ function test_name_from_config() {
 }
 
 function test_name_from_slug() {
-  exercise=$(echo "${slug}" | sed -r 's/(^|-)([a-z])/\U\2/g')
+  exercise=$(sed -r 's/(^|-)([a-z])/\U\2/g' <<< "${slug}")
   echo "${exercise}Spec.groovy"
 }
 
