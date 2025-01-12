@@ -17,7 +17,6 @@ set -e
 docker build --rm -t exercism/groovy-test-runner .
 
 # Run the Docker image using the settings mimicking the production environment
-# --read-only cannot be used because it causes https://github.com/gradle/gradle/issues/8107
 docker run \
     --rm \
     --network none \
