@@ -24,8 +24,23 @@ fi
 slug="$1"
 input_dir="${2%/}"
 output_dir="${3%/}"
-exercise=$(echo "${slug}" | sed -r 's/(^|-)([a-z])/\U\2/g')
-tests_file="${input_dir}/src/test/groovy/${exercise}Spec.groovy"
+path=${CONFIG_PATH:-'.meta'}
+
+function test_name_from_config() {
+    local config="${input_dir}/${path}/config.json"
+    [[ -f "${config}" ]] || return 1
+    local -a test_files
+    mapfile -t test_files < <(jq -r '.files.test[]' "${config}")
+    (( ${#test_files[@]} == 1 )) || return 1
+    basename "${test_files[0]}"
+}
+
+function test_name_from_slug() {
+  exercise=$(sed -r 's/(^|-)([a-z])/\U\2/g' <<< "${slug}")
+  echo "${exercise}Spec.groovy"
+}
+
+tests_file="${input_dir}/src/test/groovy/$(test_name_from_config || test_name_from_slug)"
 tests_file_original="${tests_file}.original"
 results_file="${output_dir}/results.json"
 

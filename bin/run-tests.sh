@@ -17,16 +17,10 @@ exit_code=0
 for test_dir in tests/*; do
     test_dir_name="$(basename $test_dir)"
     test_dir_path="$(realpath $test_dir)"
-    gradle_dir_path="${test_dir}/.gradle"
-    build_dir_path="${test_dir}/build"
     results_file="results.json"
     results_file_path="${test_dir}/results.json"
     expected_results_file="expected_results.json"
     expected_results_file_path="${test_dir}/expected_results.json"    
-
-    # Clear cache as this influences the test output
-    rm -rf "${gradle_dir_path}" > /dev/null
-    rm -rf "${build_dir_path}" > /dev/null
 
     bin/run.sh "${test_dir_name}" "${test_dir}" "${test_dir}"
 
