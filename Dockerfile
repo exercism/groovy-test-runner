@@ -1,6 +1,6 @@
 # === Build maven cache ===
 
-FROM maven:3.8.3-jdk-11 AS cache
+FROM maven:3.8.5-openjdk-17 AS cache
 
 # Ensure exercise dependencies are downloaded
 WORKDIR /opt/exercise
@@ -10,7 +10,7 @@ RUN mvn test dependency:go-offline -DexcludeReactor=false
 
 # === Build runtime image ===
 
-FROM maven:3.8.3-jdk-11-slim
+FROM maven:3.8.5-openjdk-17-slim
 WORKDIR /opt/test-runner
 
 RUN apt-get update && \
