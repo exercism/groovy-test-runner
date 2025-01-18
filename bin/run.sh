@@ -70,7 +70,7 @@ export JAVA_TOOL_OPTIONS="-Djansi.tmpdir=/solution/jansi-tmp -Xss128m -Xms256m -
 rm -rf target
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
-test_output=$(mvn --offline --legacy-local-repository --batch-mode --non-recursive --quiet test 2>&1)
+test_output=$(mvn --offline --batch-mode --non-recursive --quiet test 2>&1)
 exit_code=$?
 
 rm -f pom.xml
