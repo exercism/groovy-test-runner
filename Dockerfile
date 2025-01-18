@@ -14,7 +14,7 @@ FROM maven:3.9.9-eclipse-temurin-21-alpine
 WORKDIR /opt/test-runner
 
 RUN apk update && \
-        apk add --no-cache jq && \
+        apk add --no-cache --upgrade jq sed grep && \
         rm -rf /var/cache/apk/*
 
 # Copy resources
