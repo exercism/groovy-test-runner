@@ -1,6 +1,6 @@
 # === Build maven cache ===
 
-FROM maven:3.8.3-jdk-11 AS cache
+FROM maven:3.9.9-eclipse-temurin-21 AS cache
 
 # Ensure exercise dependencies are downloaded
 WORKDIR /opt/exercise
@@ -10,14 +10,12 @@ RUN mvn test dependency:go-offline -DexcludeReactor=false
 
 # === Build runtime image ===
 
-FROM maven:3.8.3-jdk-11-slim
+FROM maven:3.9.9-eclipse-temurin-21-alpine
 WORKDIR /opt/test-runner
 
-RUN apt-get update && \
-    apt-get install -y jq && \
-    apt-get purge --auto-remove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+        apk add --no-cache --upgrade jq sed grep && \
+        rm -rf /var/cache/apk/*
 
 # Copy resources
 COPY . .
