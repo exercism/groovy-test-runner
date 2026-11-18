@@ -65,6 +65,16 @@ cp /root/pom.xml .
 mkdir -p /solution/jansi-tmp
 # Tuning those parametes can speed up things
 export JAVA_TOOL_OPTIONS="-Djansi.tmpdir=/solution/jansi-tmp -Xss128m -Xms256m -Xmx2G -XX:+UseG1GC"
+# Maven's own JVM only runs short-lived start-up and compile code. With 2 CPUs, the C2 JIT
+# compiler spends more time compiling that code than it saves, so we stop at C1.
+# The tests run in Surefire's separate JVM, which keeps the full JIT.
+export MAVEN_OPTS="-XX:TieredStopAtLevel=1"
+# Load the classes Maven uses in a run (Maven itself, the Groovy compiler and Surefire) from
+# a class data sharing archive made at image build (see the Dockerfile). Mapping the archive
+# is faster than reading and verifying each class from its jar.
+if [[ -f /opt/test-runner/maven.jsa ]]; then
+    MAVEN_OPTS+=" -XX:SharedArchiveFile=/opt/test-runner/maven.jsa -Xlog:cds=off -Xlog:cds+dynamic=off"
+fi
 
 # Remove maven cache if it exists
 rm -rf target

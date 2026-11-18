@@ -26,4 +26,13 @@ COPY --from=cache /root/.m2 /root/.m2
 # Copy Maven pom.xml
 COPY --from=cache /opt/exercise/pom.xml /root/pom.xml
 
+# Run Maven once on the runner's own Groovy project and save every class it loads
+# in a class data sharing archive. bin/run.sh passes the archive to Maven's JVM,
+# which then maps those classes instead of reading and verifying them from the jars.
+# The options match the ones set by bin/run.sh.
+RUN JAVA_TOOL_OPTIONS="-Xss128m -Xms256m -Xmx2G -XX:+UseG1GC" \
+    MAVEN_OPTS="-XX:TieredStopAtLevel=1 -XX:ArchiveClassesAtExit=/opt/test-runner/maven.jsa" \
+        mvn --offline --batch-mode --non-recursive --quiet test && \
+    rm -rf target
+
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
