@@ -69,6 +69,12 @@ export JAVA_TOOL_OPTIONS="-Djansi.tmpdir=/solution/jansi-tmp -Xss128m -Xms256m -
 # compiler spends more time compiling that code than it saves, so we stop at C1.
 # The tests run in Surefire's separate JVM, which keeps the full JIT.
 export MAVEN_OPTS="-XX:TieredStopAtLevel=1"
+# Load the classes Maven uses in a run (Maven itself, the Groovy compiler and Surefire) from
+# a class data sharing archive made at image build (see the Dockerfile). Mapping the archive
+# is faster than reading and verifying each class from its jar.
+if [[ -f /opt/test-runner/maven.jsa ]]; then
+    MAVEN_OPTS+=" -XX:SharedArchiveFile=/opt/test-runner/maven.jsa -Xlog:cds=off -Xlog:cds+dynamic=off"
+fi
 
 # Remove maven cache if it exists
 rm -rf target
